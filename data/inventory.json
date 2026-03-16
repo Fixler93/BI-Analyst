@@ -1,0 +1,7 @@
+[  
+  {"item_id": "1", "item_name": "Laptop", "quantity": 50, "price": 1200.00},  
+  {"item_id": "2", "item_name": "Tablet", "quantity": 100, "price": 300.00},  
+  {"item_id": "3", "item_name": "Smartphone", "quantity": 200, "price": 600.00},  
+  {"item_id": "4", "item_name": "Headphones", "quantity": 150, "price": 100.00},  
+  {"item_id": "5", "item_name": "Monitor", "quantity": 75, "price": 400.00}  
+]

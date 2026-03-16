@@ -1,0 +1,10 @@
+{
+  "mission": "Find the shortage material in supply chain data and provide a report on potential causes and impacts.",
+  "questions": [
+    "What materials are currently in short supply?",
+    "How does the shortage impact the production schedule?",
+    "What suppliers have been affected by these shortages?",
+    "What alternative materials are available?",
+    "How can we mitigate future shortages?"
+  ]
+}

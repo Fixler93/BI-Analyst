@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+</head>
+<body>
+    <h1>Welcome to the Mission</h1>
+    <form id="playerForm">
+        <label for="playerName">Enter your name:</label>
+        <input type="text" id="playerName" name="playerName" required>
+        <button type="submit">Start Mission</button>
+    </form>
+    <div id="mission">
+        <h2>Mission 1</h2>
+        <p>Your mission is to gather information from the Ruins of Eldar.</p>
+    </div>
+    <script>
+        document.getElementById('playerForm').onsubmit = function(event) {
+            event.preventDefault();
+            const playerName = document.getElementById('playerName').value;
+            alert('Welcome, ' + playerName + '! Ready for your first mission?');
+        };
+    </script>
+</body>
+</html>

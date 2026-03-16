@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
+    <title>BI Analyst - Mission Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to the Mission</h1>
-    <form id="playerForm">
-        <label for="playerName">Enter your name:</label>
-        <input type="text" id="playerName" name="playerName" required>
-        <button type="submit">Start Mission</button>
-    </form>
-    <div id="mission">
-        <h2>Mission 1</h2>
-        <p>Your mission is to gather information from the Ruins of Eldar.</p>
+    <div id="landing-page" class="page active">
+        <h1>BI Analyst - Mission Dashboard</h1>
+        <div class="form-group">
+            <label for="playerName">שם השחקן:</label>
+            <input type="text" id="playerName" placeholder="הכנס את שמך">
+        </div>
+        <button onclick="startMission()">התחל משימה</button>
     </div>
-    <script>
-        document.getElementById('playerForm').onsubmit = function(event) {
-            event.preventDefault();
-            const playerName = document.getElementById('playerName').value;
-            alert('Welcome, ' + playerName + '! Ready for your first mission?');
-        };
-    </script>
+
+    <div id="mission-page" class="page">
+        <h1>Mission 1: מצא את החומר בחוסר</h1>
+        <p id="playerGreeting"></p>
+        <div class="tables-selector">
+            <button onclick="openTable('inventory')">📦 Inventory</button>
+            <button onclick="openTable('orders')">📋 Orders</button>
+            <button onclick="openTable('suppliers')">🏭 Suppliers</button>
+            <button onclick="openTable('materials')">📂 Materials</button>
+        </div>
+        <div id="table-container"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

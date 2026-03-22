@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,24 +8,47 @@
 </head>
 <body>
     <div id="landing-page" class="page active">
-        <h1>BI Analyst - Mission Dashboard</h1>
-        <div class="form-group">
-            <label for="playerName">שם השחקן:</label>
-            <input type="text" id="playerName" placeholder="הכנס את שמך">
+        <div class="login-box">
+            <h1>BI Analyst Dashboard</h1>
+            <p>מערכת ניהול שרשרת אספקה</p>
+            <div class="form-group">
+                <input type="text" id="playerName" placeholder="הכנס את שמך כדי להתחיל...">
+            </div>
+            <button onclick="startMission()" class="primary-btn">התחבר למערכת</button>
         </div>
-        <button onclick="startMission()">התחל משימה</button>
     </div>
 
-    <div id="mission-page" class="page">
-        <h1>Mission 1: מצא את החומר בחוסר</h1>
-        <p id="playerGreeting"></p>
-        <div class="tables-selector">
-            <button onclick="openTable('inventory')">📦 Inventory</button>
-            <button onclick="openTable('orders')">📋 Orders</button>
-            <button onclick="openTable('suppliers')">🏭 Suppliers</button>
-            <button onclick="openTable('materials')">📂 Materials</button>
-        </div>
-        <div id="table-container"></div>
+    <div id="mission-page" class="page hidden">
+        <header>
+            <h1>משימה 1: משבר במלאי</h1>
+            <p id="playerGreeting"></p>
+        </header>
+        
+        <main class="dashboard-container">
+            <aside class="sidebar">
+                <h3>מקורות נתונים</h3>
+                <button onclick="openTable('inventory')">📦 מלאי (Inventory)</button>
+                <button onclick="openTable('orders')">📋 הזמנות (Orders)</button>
+                <button onclick="openTable('suppliers')">🏭 ספקים (Suppliers)</button>
+                <button onclick="openTable('materials')">📂 חומרי גלם (Materials)</button>
+                
+                <div class="mission-submission">
+                    <h3>זיהית את החוסר?</h3>
+                    <input type="text" id="missionAnswer" placeholder="שם החומר שחסר...">
+                    <button onclick="checkAnswer()" class="submit-btn">שלח דוח</button>
+                    <p id="feedbackMessage"></p>
+                </div>
+            </aside>
+            
+            <section class="data-view">
+                <div id="controls-container" class="hidden">
+                    <input type="text" id="searchInput" placeholder="חפש בטבלה...">
+                </div>
+                <div id="table-container">
+                    <p class="placeholder-text">בחר טבלה מהתפריט כדי להתחיל לנתח נתונים.</p>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script src="script.js"></script>

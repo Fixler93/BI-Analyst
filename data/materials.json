@@ -1,23 +1,5 @@
-[  
-  {  
-    "id": 1,  
-    "material_name": "Material A",  
-    "description": "Description of Material A",  
-    "category": "Category 1",  
-    "unit_of_measure": "kg"  
-  },  
-  {  
-    "id": 2,  
-    "material_name": "Material B",  
-    "description": "Description of Material B",  
-    "category": "Category 1",  
-    "unit_of_measure": "kg"  
-  },  
-  {  
-    "id": 3,  
-    "material_name": "Material C",  
-    "description": "Description of Material C",  
-    "category": "Category 2",  
-    "unit_of_measure": "liters"  
-  }  
+[
+    { "Product": "Heavy Duty Engine", "Required_Material": "Steel", "Qty_Per_Unit": 5 },
+    { "Product": "Standard Casing", "Required_Material": "Aluminum", "Qty_Per_Unit": 2 },
+    { "Product": "Plastic Covers", "Required_Material": "Plastic", "Qty_Per_Unit": 1 }
 ]

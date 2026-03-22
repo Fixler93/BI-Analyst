@@ -27,10 +27,12 @@
         <main class="dashboard-container">
             <aside class="sidebar">
                 <h3>מקורות נתונים</h3>
-                <button onclick="openTable('inventory')">📦 מלאי (Inventory)</button>
-                <button onclick="openTable('orders')">📋 הזמנות (Orders)</button>
-                <button onclick="openTable('suppliers')">🏭 ספקים (Suppliers)</button>
-                <button onclick="openTable('materials')">📂 חומרי גלם (Materials)</button>
+                <div class="tables-selector" style="display:flex; flex-direction:column; gap:10px; margin-bottom: 20px;">
+                    <button onclick="openTable('inventory', 'table-container')">📦 Inventory</button>
+                    <button onclick="openTable('orders', 'table-container')">📋 Orders</button>
+                    <button onclick="openTable('suppliers', 'table-container')">🏭 Suppliers</button>
+                    <button onclick="openTable('materials', 'table-container')">📂 Materials</button>
+                </div>
                 
                 <div class="mission-submission">
                     <h3>זיהית את החוסר?</h3>
@@ -41,9 +43,6 @@
             </aside>
             
             <section class="data-view">
-                <div id="controls-container" class="hidden">
-                    <input type="text" id="searchInput" placeholder="חפש בטבלה...">
-                </div>
                 <div id="table-container">
                     <p class="placeholder-text">בחר טבלה מהתפריט כדי להתחיל לנתח נתונים.</p>
                 </div>
@@ -51,6 +50,79 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <div id="mission2-page" class="page hidden">
+        <header>
+            <h1>Mission 2: Quantify the Damage</h1>
+            <p>We know MAT-02 is missing. Write a query to find: <strong>How many orders are delayed specifically due to MAT-02?</strong></p>
+        </header>
+        
+        <main class="dashboard-container">
+            <aside class="sidebar">
+                <h3>Data Sources</h3>
+                <div class="tables-selector" style="display:flex; flex-direction:column; gap:10px; margin-bottom: 20px;">
+                    <button onclick="openTable('inventory', 'table-container2')">📦 Inventory</button>
+                    <button onclick="openTable('orders', 'table-container2')">📋 Orders</button>
+                    <button onclick="openTable('suppliers', 'table-container2')">🏭 Suppliers</button>
+                    <button onclick="openTable('materials', 'table-container2')">📂 Materials</button>
+                </div>
+            </aside>
+            
+            <section class="data-view">
+                <div id="table-container2" style="margin-bottom: 30px; min-height: 150px;">
+                    <p class="placeholder-text">Open a table from the sidebar to inspect the data...</p>
+                </div>
+
+                <div class="terminal-container">
+                    <div class="terminal-header">SQL Query Builder</div>
+                    
+                    <div class="query-chips">
+                        <span class="chip command" onclick="addQueryChip('SELECT')">SELECT</span>
+                        <span class="chip command" onclick="addQueryChip('FROM')">FROM</span>
+                        <span class="chip command" onclick="addQueryChip('WHERE')">WHERE</span>
+                        <span class="chip command" onclick="addQueryChip('AND')">AND</span>
+                        <span class="chip command" onclick="addQueryChip('OR')">OR</span>
+                        <span class="chip command" onclick="addQueryChip('GROUP BY')">GROUP BY</span>
+                        
+                        <span class="chip agg" onclick="addQueryChip('COUNT(*)')">COUNT(*)</span>
+                        <span class="chip agg" onclick="addQueryChip('COUNT(Order_ID)')">COUNT(Order_ID)</span>
+                        <span class="chip agg" onclick="addQueryChip('COUNT(Product)')">COUNT(Product)</span>
+                        <span class="chip agg" onclick="addQueryChip('SUM(Qty_Ordered)')">SUM(Qty_Ordered)</span>
+                        <span class="chip agg" onclick="addQueryChip('AVG(Qty_Ordered)')">AVG(Qty_Ordered)</span>
+                        <span class="chip agg" onclick="addQueryChip('MAX(Qty_Ordered)')">MAX(Qty_Ordered)</span>
+                        <span class="chip agg" onclick="addQueryChip('MIN(Qty_Ordered)')">MIN(Qty_Ordered)</span>
+                        <span class="chip agg" onclick="addQueryChip('SUM(Priority)')">SUM(Priority)</span>
+                        
+                        <span class="chip table" onclick="addQueryChip('orders')">orders</span>
+                        <span class="chip table" onclick="addQueryChip('inventory')">inventory</span>
+                        <span class="chip table" onclick="addQueryChip('suppliers')">suppliers</span>
+                        <span class="chip table" onclick="addQueryChip('materials')">materials</span>
+                        <span class="chip table" onclick="addQueryChip('customers')">customers</span>
+                        
+                        <span class="chip condition" onclick="addQueryChip('Status = \'Pending Material\'')">Status = 'Pending Material'</span>
+                        <span class="chip condition" onclick="addQueryChip('Status = \'In Production\'')">Status = 'In Production'</span>
+                        <span class="chip condition" onclick="addQueryChip('Status = \'Completed\'')">Status = 'Completed'</span>
+                        <span class="chip condition" onclick="addQueryChip('Material_ID = \'MAT-02\'')">Material_ID = 'MAT-02'</span>
+                        <span class="chip condition" onclick="addQueryChip('Material_ID = \'MAT-05\'')">Material_ID = 'MAT-05'</span>
+                        <span class="chip condition" onclick="addQueryChip('Priority = \'High\'')">Priority = 'High'</span>
+                    </div>
+
+                    <div class="terminal-screen">
+                        <span class="prompt">&gt; </span><span id="query-text"></span><span class="cursor">_</span>
+                    </div>
+
+                    <div class="terminal-actions">
+                        <button onclick="runQuery()" class="run-btn">Run Query</button>
+                        <button onclick="clearQuery()" class="clear-btn">Clear</button>
+                    </div>
+
+                    <div id="query-result" class="terminal-output"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="mission1.js"></script>
+    <script src="mission2.js"></script>
 </body>
 </html>

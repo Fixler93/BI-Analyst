@@ -1,1 +1,5 @@
-[\n  {\n    \"id\": 1,\n    \"name\": \"Supplier A\",\n    \"contact\": \"contact@supplierA.com\",\n    \"phone\": \"123-456-7890\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Supplier B\",\n    \"contact\": \"contact@supplierB.com\",\n    \"phone\": \"987-654-3210\"\n  },\n  {\n    \"id\": 3,\n    \"name\": \"Supplier C\",\n    \"contact\": \"contact@supplierC.com\",\n    \"phone\": \"456-789-1230\"\n  }\n]
+[
+    { "Supplier_ID": "SUP-100", "Supplier_Name": "Global Metals Inc", "Material": "Steel", "Lead_Time_Days": 14, "Reliability_Score": 85, "Current_Status": "Delayed" },
+    { "Supplier_ID": "SUP-101", "Supplier_Name": "IronWorks Ltd", "Material": "Iron", "Lead_Time_Days": 7, "Reliability_Score": 95, "Current_Status": "Active" },
+    { "Supplier_ID": "SUP-102", "Supplier_Name": "PolyPlast", "Material": "Plastic", "Lead_Time_Days": 5, "Reliability_Score": 90, "Current_Status": "Active" }
+]

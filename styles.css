@@ -95,7 +95,6 @@ header {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .sidebar button {
@@ -103,6 +102,7 @@ header {
     color: var(--text-light);
     text-align: right;
     border: 1px solid #334155;
+    padding: 10px;
 }
 
 .sidebar button:hover {
@@ -129,17 +129,6 @@ header {
 }
 
 /* Table Styles */
-#controls-container {
-    margin-bottom: 20px;
-}
-
-#searchInput {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -151,7 +140,7 @@ table {
 
 th, td {
     padding: 12px 15px;
-    text-align: right;
+    text-align: right; /* מאחר והמסך מוגדר RTL */
     border-bottom: 1px solid #e2e8f0;
 }
 
@@ -169,4 +158,83 @@ tr:hover {
     text-align: center;
     margin-top: 50px;
     font-size: 1.2em;
+}
+
+/* Terminal Styles */
+.terminal-container {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    color: #e2e8f0;
+    border: 1px solid #334155;
+    text-align: left; /* טרמינל תמיד באנגלית משמאל לימין */
+    direction: ltr;
+}
+
+.terminal-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #94a3b8;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+}
+
+.query-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.chip {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s, opacity 0.2s;
+    font-family: monospace;
+}
+
+.chip:active { transform: scale(0.95); }
+.chip:hover { opacity: 0.8; }
+
+.chip.command { background: #3b82f6; color: white; }
+.chip.agg { background: #8b5cf6; color: white; }
+.chip.table { background: #10b981; color: white; }
+.chip.condition { background: #f59e0b; color: white; }
+
+.terminal-screen {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+    min-height: 50px;
+    margin-bottom: 15px;
+    color: #f8fafc;
+}
+
+.prompt { color: #10b981; }
+.cursor { animation: blink 1s step-end infinite; }
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.terminal-actions button {
+    margin-right: 10px;
+    font-family: monospace;
+}
+
+.run-btn { background: #10b981; }
+.clear-btn { background: #64748b; }
+
+.terminal-output {
+    margin-top: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    border-left: 3px solid #3b82f6;
+    background: rgba(15, 23, 42, 0.5);
+    min-height: 20px;
 }

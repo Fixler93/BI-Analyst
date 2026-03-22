@@ -1,7 +1,7 @@
 // main.js - הלוגיקה הכללית של המערכת (ניווט וטעינת נתונים חכמה)
 
 let currentData = [];
-let activeFilters = {}; // אובייקט שישמור איזה טקסט חיפשנו בכל עמודה
+let activeFilters = {}; 
 
 function startMission() {
     const nameInput = document.getElementById('playerName').value;
@@ -30,7 +30,7 @@ function openTable(tableName, containerId) {
         })
         .then(data => {
             currentData = data;
-            activeFilters = {}; // איפוס פילטרים כשפותחים טבלה חדשה
+            activeFilters = {}; 
             buildTableStructure(data, containerId);
         })
         .catch(error => {
@@ -38,7 +38,6 @@ function openTable(tableName, containerId) {
         });
 }
 
-// פונקציה לבניית המעטפת (כותרות ותיבות חיפוש)
 function buildTableStructure(data, containerId) {
     const tableContainer = document.getElementById(containerId);
     tableContainer.innerHTML = ''; 
@@ -48,14 +47,18 @@ function buildTableStructure(data, containerId) {
         return;
     }
 
+    // יצירת העטיפה לגלילה הפנימית
+    const wrapper = document.createElement('div');
+    wrapper.className = 'table-wrapper';
+
     const table = document.createElement('table');
-    const header = table.createTHead();
-    const body = document.createElement('tbody'); // ה-body יישמר בנפרד כדי שנעדכן רק אותו
+    const header = document.createElement('thead');
+    table.appendChild(header);
+    const body = document.createElement('tbody');
     table.appendChild(body);
 
     const columns = Object.keys(data[0]);
     
-    // 1. ציור הכותרות הרגילות
     const headerRow = header.insertRow();
     columns.forEach(col => {
         const th = document.createElement('th');
@@ -63,12 +66,12 @@ function buildTableStructure(data, containerId) {
         headerRow.appendChild(th);
     });
 
-    // 2. שורת פילטרים - תיבת קלט לכל עמודה
     const filterRow = header.insertRow();
     filterRow.style.backgroundColor = '#f1f5f9';
     columns.forEach(col => {
         const th = document.createElement('th');
         th.style.padding = '8px';
+        th.style.borderBottom = '2px solid #cbd5e1';
         
         const input = document.createElement('input');
         input.type = 'text';
@@ -80,7 +83,6 @@ function buildTableStructure(data, containerId) {
         input.style.borderRadius = '4px';
         input.style.fontSize = '0.85em';
 
-        // המאזין מעדכן את השורות בלבד, כך שלא מאבדים פוקוס בהקלדה!
         input.addEventListener('input', (e) => {
             activeFilters[col] = e.target.value.toLowerCase();
             updateTableBody(body, columns);
@@ -90,20 +92,18 @@ function buildTableStructure(data, containerId) {
         filterRow.appendChild(th);
     });
 
-    tableContainer.appendChild(table);
+    wrapper.appendChild(table);
+    tableContainer.appendChild(wrapper);
     
-    // מילוי הנתונים בפעם הראשונה
     updateTableBody(body, columns);
 }
 
-// פונקציה לעדכון השורות עצמן בהתאם לפילטרים
 function updateTableBody(tbody, columns) {
-    tbody.innerHTML = ''; // מחיקת שורות קודמות
+    tbody.innerHTML = ''; 
 
-    // סינון לפי כל תיבות הטקסט המלאות
     const filteredData = currentData.filter(item => {
         return columns.every(col => {
-            if (!activeFilters[col]) return true; // אם התיבה ריקה, תתעלם
+            if (!activeFilters[col]) return true; 
             return String(item[col]).toLowerCase().includes(activeFilters[col]);
         });
     });

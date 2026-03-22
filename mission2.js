@@ -48,8 +48,8 @@ function runQuery() {
                       (currentQuery.includes('COUNT(Order_ID)') || currentQuery.includes('COUNT(*)') || currentQuery.includes('COUNT(Product)'));
 
     if (isCorrect) {
-        resultDiv.innerHTML = '<span style="color: #10b981;">[Query Executed Successfully]<br>Result: 4 Orders are stuck specifically due to MAT-02 shortage.</span><br><br><button class="submit-btn" style="background:#10b981; margin-top:10px;" onclick="alert(\'Great Job! Ready for Mission 3?\')">Complete Mission</button>';
-    } 
+        resultDiv.innerHTML = '<span style="color: #10b981;">[Query Executed Successfully]<br>Result: 4 Orders are stuck specifically due to MAT-02 shortage.</span><br><br><button class="submit-btn" style="background:#10b981; margin-top:10px;" onclick="goToMission3()">Architect Database</button>';
+    }
     else if (hasOrders && hasWhere && hasStatusCondition && !hasMaterialCondition) {
         resultDiv.innerHTML = '<span style="color: #f59e0b;">[Query Executed]<br>Result: 7 Orders.<br>Hint: You found ALL delayed orders. Filter specifically for the missing material!</span>';
     }
@@ -62,4 +62,17 @@ function runQuery() {
     else {
         resultDiv.innerHTML = '<span style="color: #ef4444;">Error: Check your logic. Make sure to COUNT the orders, specify the right table, and apply BOTH conditions.</span>';
     }
+}
+function goToMission3() {
+    document.getElementById('mission2-page').classList.remove('active');
+    document.getElementById('mission2-page').classList.add('hidden');
+    
+    document.getElementById('mission3-page').classList.remove('hidden');
+    document.getElementById('mission3-page').classList.add('active');
+    
+    // הדלקת הרקע הדינאמי של הדאטאבייס
+    document.getElementById('db-background').classList.remove('hidden');
+    
+    // אתחול משימה 3
+    initMission3();
 }

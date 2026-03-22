@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="db-background" class="hidden">
+        <div class="binary-stream stream1">10110010 01001001</div>
+        <div class="binary-stream stream2">11001000 10100111</div>
+        <div class="binary-stream stream3">01010101 11100000</div>
+        <div class="binary-stream stream4">10000011 00111010</div>
+        <div class="binary-stream stream5">01111000 11001101</div>
+        
+        <svg class="bg-graph" viewBox="0 0 1000 500" preserveAspectRatio="none">
+            <path class="graph-line" d="M 0 400 Q 150 400, 200 250 T 400 150 T 600 300 T 800 100 T 1000 50" />
+            <path class="graph-line delay" d="M 0 350 Q 200 200, 350 300 T 550 100 T 750 200 T 1000 150" />
+        </svg>
+    </div>
+
     <div id="landing-page" class="page active">
         <div class="login-box">
             <h1>BI Analyst Dashboard</h1>
@@ -20,10 +33,10 @@
 
     <div id="mission-page" class="page hidden">
         <header>
-            <h1>משימה 1: משבר במלאי</h1>
+            <button class="skip-btn" onclick="goToMission2()">⏭️ דלג למשימה 2</button>
+            <h1>🗂️ 🔍 משימה 1: משבר במלאי</h1>
             <p id="playerGreeting"></p>
         </header>
-        
         <main class="dashboard-container">
             <aside class="sidebar">
                 <h3>מקורות נתונים</h3>
@@ -33,15 +46,12 @@
                     <button onclick="openTable('suppliers', 'table-container')">🏭 Suppliers</button>
                     <button onclick="openTable('materials', 'table-container')">📂 Materials</button>
                 </div>
-                
                 <div class="mission-submission">
                     <h3>זיהית את החוסר?</h3>
                     <input type="text" id="missionAnswer" placeholder="שם החומר שחסר...">
                     <button onclick="checkAnswer()" class="submit-btn">שלח דוח</button>
-                    <p id="feedbackMessage"></p>
                 </div>
             </aside>
-            
             <section class="data-view">
                 <div id="table-container">
                     <p class="placeholder-text">בחר טבלה מהתפריט כדי להתחיל לנתח נתונים.</p>
@@ -52,10 +62,10 @@
 
     <div id="mission2-page" class="page hidden">
         <header>
-            <h1>Mission 2: Quantify the Damage</h1>
+            <button class="skip-btn" onclick="goToMission3()">⏭️ דלג למשימה 3</button>
+            <h1><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg" width="32" style="vertical-align: text-bottom; margin-left: 10px;">Mission 2: Quantify the Damage</h1>
             <p>We know MAT-02 is missing. Write a query to find: <strong>How many orders are delayed specifically due to MAT-02?</strong></p>
         </header>
-        
         <main class="dashboard-container">
             <aside class="sidebar">
                 <h3>Data Sources</h3>
@@ -66,15 +76,9 @@
                     <button onclick="openTable('materials', 'table-container2')">📂 Materials</button>
                 </div>
             </aside>
-            
             <section class="data-view">
-                <div id="table-container2" style="margin-bottom: 30px; min-height: 150px;">
-                    <p class="placeholder-text">Open a table from the sidebar to inspect the data...</p>
-                </div>
-
                 <div class="terminal-container">
                     <div class="terminal-header">SQL Query Builder</div>
-                    
                     <div class="query-chips">
                         <span class="chip command" onclick="addQueryChip('SELECT')">SELECT</span>
                         <span class="chip command" onclick="addQueryChip('FROM')">FROM</span>
@@ -85,17 +89,14 @@
                         
                         <span class="chip agg" onclick="addQueryChip('COUNT(*)')">COUNT(*)</span>
                         <span class="chip agg" onclick="addQueryChip('COUNT(Order_ID)')">COUNT(Order_ID)</span>
-                        <span class="chip agg" onclick="addQueryChip('COUNT(Product)')">COUNT(Product)</span>
                         <span class="chip agg" onclick="addQueryChip('SUM(Qty_Ordered)')">SUM(Qty_Ordered)</span>
                         <span class="chip agg" onclick="addQueryChip('AVG(Qty_Ordered)')">AVG(Qty_Ordered)</span>
                         <span class="chip agg" onclick="addQueryChip('MAX(Qty_Ordered)')">MAX(Qty_Ordered)</span>
-                        <span class="chip agg" onclick="addQueryChip('MIN(Qty_Ordered)')">MIN(Qty_Ordered)</span>
                         <span class="chip agg" onclick="addQueryChip('SUM(Priority)')">SUM(Priority)</span>
                         
                         <span class="chip table" onclick="addQueryChip('orders')">orders</span>
                         <span class="chip table" onclick="addQueryChip('inventory')">inventory</span>
                         <span class="chip table" onclick="addQueryChip('suppliers')">suppliers</span>
-                        <span class="chip table" onclick="addQueryChip('materials')">materials</span>
                         <span class="chip table" onclick="addQueryChip('customers')">customers</span>
                         
                         <span class="chip condition" onclick="addQueryChip('Status = \'Pending Material\'')">Status = 'Pending Material'</span>
@@ -103,26 +104,77 @@
                         <span class="chip condition" onclick="addQueryChip('Status = \'Completed\'')">Status = 'Completed'</span>
                         <span class="chip condition" onclick="addQueryChip('Material_ID = \'MAT-02\'')">Material_ID = 'MAT-02'</span>
                         <span class="chip condition" onclick="addQueryChip('Material_ID = \'MAT-05\'')">Material_ID = 'MAT-05'</span>
-                        <span class="chip condition" onclick="addQueryChip('Priority = \'High\'')">Priority = 'High'</span>
                     </div>
-
                     <div class="terminal-screen">
                         <span class="prompt">&gt; </span><span id="query-text"></span><span class="cursor">_</span>
                     </div>
-
                     <div class="terminal-actions">
                         <button onclick="runQuery()" class="run-btn">Run Query</button>
                         <button onclick="clearQuery()" class="clear-btn">Clear</button>
                     </div>
-
                     <div id="query-result" class="terminal-output"></div>
+                </div>
+
+                <div id="table-container2">
+                    <p class="placeholder-text">Open a table from the sidebar to inspect the data...</p>
                 </div>
             </section>
         </main>
     </div>
 
+    <div id="mission3-page" class="page hidden" style="background: transparent;">
+        <div style="padding: 20px; position: relative; z-index: 20;">
+            <button class="skip-btn" onclick="alert('סיימת את כל המשימות כרגע!')" style="top: 0; left: 0; position: relative; display: inline-block; margin-bottom: 10px;">⏭️ סיום / דלג</button>
+            <div class="m3-header-card">
+                <h1 style="margin-top:0;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" width="36" style="vertical-align: text-bottom; margin-left: 10px;">
+                    Mission 3: Database Architecture
+                </h1>
+                <p style="margin-bottom:0; font-size: 1.05em; line-height: 1.5;">
+                   מסד הנתונים הקודם קרס לחלוטין! עליך לעצב מחדש את הארכיטקטורה מתוך מאגר העמודות שחילצנו בחירום.
+                   <br><br>
+                   <strong>שים לב:</strong> יש כאן הצעה לעמודות נצרכות, עליך להחליט מה לשים ומה לא. מחייבים אותך להוסיף עמודת "תיאור סטטוס" להזמנה – תחשוב האם נדרשת טבלה נוספת כדי שהמודל יעבוד בצורה תקינה.
+                   <br><br>
+                   <strong>הוראות עבודה:</strong><br>
+                   1. גרור עמודות לטבלאות (הוסף טבלאות בעזרת הכפתור).<br>
+                   2. קליק על עמודה בטבלה מגדיר אותה כ-<span style="color:#eab308;font-weight:bold;">PK (מפתח ראשי)</span>, קליק שני מגדיר כ-<span style="color:#a855f7;font-weight:bold;">Calc (מחושב)</span>. שלישי מוחק את הסימון.<br>
+                   3. הגדר רמת נרמול לכל טבלה.<br>
+                   4. הקישור (Foreign Key) מתבצע בעמודת תיאור הסטטוס (באמצעות לחצן 🔗).
+                </p>
+            </div>
+        </div>
+        
+        <main class="dashboard-container" style="background: transparent;">
+            <aside class="sidebar m3-sidebar">
+                <h3 style="margin-top:0;">מאגר עמודות (גרור מכאן)</h3>
+                <div id="column-pool" class="column-pool" ondrop="dropToPool(event)" ondragover="allowDrop(event)">
+                    </div>
+            </aside>
+            
+            <section class="data-view db-canvas" style="flex: 1; min-height: 80vh;">
+                <button onclick="addNewTable()" class="primary-btn" style="margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">➕ הוסף טבלה חדשה</button>
+                <div id="tables-workspace" class="tables-workspace">
+                    </div>
+                
+                <div style="margin-top: 40px; margin-bottom: 40px; text-align: left;" dir="ltr">
+                    <button onclick="submitDatabaseDesign()" class="submit-btn" style="font-size: 1.2em; padding: 15px 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">Submit Architecture</button>
+                </div>
+            </section>
+        </main>
+        
+        <div id="m3-score-modal" class="hidden modal-overlay">
+            <div class="modal-content">
+                <h2>תוצאות ארכיטקטורה</h2>
+                <div id="score-display" class="score-circle">0</div>
+                <p id="score-feedback"></p>
+                <button onclick="document.getElementById('m3-score-modal').classList.add('hidden')" class="primary-btn">סגור כדי לתקן</button>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
     <script src="mission1.js"></script>
     <script src="mission2.js"></script>
+    <script src="mission3.js"></script>
 </body>
 </html>

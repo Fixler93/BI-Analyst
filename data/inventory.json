@@ -1,7 +1,5 @@
-[  
-  {"item_id": "1", "item_name": "Laptop", "quantity": 50, "price": 1200.00},  
-  {"item_id": "2", "item_name": "Tablet", "quantity": 100, "price": 300.00},  
-  {"item_id": "3", "item_name": "Smartphone", "quantity": 200, "price": 600.00},  
-  {"item_id": "4", "item_name": "Headphones", "quantity": 150, "price": 100.00},  
-  {"item_id": "5", "item_name": "Monitor", "quantity": 75, "price": 400.00}  
+[
+    { "Item_ID": "101", "Item_Name": "ברזל", "Quantity": 500, "Min_Required": 200, "Status": "תקין" },
+    { "Item_ID": "102", "Item_Name": "פלדה", "Quantity": 10, "Min_Required": 150, "Status": "חוסר קריטי" },
+    { "Item_ID": "103", "Item_Name": "פלסטיק", "Quantity": 800, "Min_Required": 300, "Status": "תקין" }
 ]

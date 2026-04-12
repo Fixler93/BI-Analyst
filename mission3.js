@@ -216,7 +216,7 @@ function showScoreModal(score, feedbackMessages) {
 
             feedbackText.innerHTML = feedbackMessages.length > 0 ? 
                 "<ul style='text-align:right; color:#ef4444; font-size:0.9em; padding-right:15px; margin-top:20px;'>" + feedbackMessages.map(m => `<li>${m}</li>`).join('') + "</ul>" : 
-                "<div style='margin-top:20px;'><span style='color:#10b981; font-weight:bold; font-size:1.2em;'>מבנה מושלם! עבודה של DBA אמיתי. הוכחת את עצמך.</span></div>";
+                "<div style='margin-top:20px;'><span style='color:#10b981; font-weight:bold; font-size:1.2em;'>מבנה מושלם! עבודה של DBA אמיתי. הוכחת את עצמך.</span><br><br><button class='submit-btn' style='background:#10b981; padding: 10px 20px;' onclick='goToMission4(); document.getElementById(\"m3-score-modal\").classList.add(\"hidden\");'>המשך למשימה 4</button></div>";
         } else {
             currentScore += 2;
             if(currentScore > score) currentScore = score;

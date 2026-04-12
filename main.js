@@ -1,5 +1,3 @@
-// main.js - הלוגיקה הכללית של המערכת (ניווט וטעינת נתונים חכמה)
-
 let currentData = [];
 let activeFilters = {}; 
 
@@ -9,13 +7,10 @@ function startMission() {
         alert('אנא הכנס את שמך כדי להתחיל');
         return;
     }
-
     document.getElementById('landing-page').classList.remove('active');
     document.getElementById('landing-page').classList.add('hidden');
-    
     document.getElementById('mission-page').classList.remove('hidden');
     document.getElementById('mission-page').classList.add('active');
-
     document.getElementById('playerGreeting').innerText = `שלום ${nameInput}, מנהל/ת אספקה. בוקר טוב! יש לנו בעיה בייצור, נראה שחסר לנו חומר גלם קריטי. תעבור על הנתונים ותגיד לנו מה חסר.`;
 }
 
@@ -41,38 +36,30 @@ function openTable(tableName, containerId) {
 function buildTableStructure(data, containerId) {
     const tableContainer = document.getElementById(containerId);
     tableContainer.innerHTML = ''; 
-
     if (data.length === 0) {
         tableContainer.innerHTML = '<p style="text-align:center;">No data available</p>';
         return;
     }
-
-    // יצירת העטיפה לגלילה הפנימית
     const wrapper = document.createElement('div');
     wrapper.className = 'table-wrapper';
-
     const table = document.createElement('table');
     const header = document.createElement('thead');
     table.appendChild(header);
     const body = document.createElement('tbody');
     table.appendChild(body);
-
     const columns = Object.keys(data[0]);
-    
     const headerRow = header.insertRow();
     columns.forEach(col => {
         const th = document.createElement('th');
         th.innerText = col;
         headerRow.appendChild(th);
     });
-
     const filterRow = header.insertRow();
     filterRow.style.backgroundColor = '#f1f5f9';
     columns.forEach(col => {
         const th = document.createElement('th');
         th.style.padding = '8px';
         th.style.borderBottom = '2px solid #cbd5e1';
-        
         const input = document.createElement('input');
         input.type = 'text';
         input.placeholder = `🔍 Filter ${col}...`;
@@ -82,32 +69,26 @@ function buildTableStructure(data, containerId) {
         input.style.border = '1px solid #cbd5e1';
         input.style.borderRadius = '4px';
         input.style.fontSize = '0.85em';
-
         input.addEventListener('input', (e) => {
             activeFilters[col] = e.target.value.toLowerCase();
             updateTableBody(body, columns);
         });
-        
         th.appendChild(input);
         filterRow.appendChild(th);
     });
-
     wrapper.appendChild(table);
     tableContainer.appendChild(wrapper);
-    
     updateTableBody(body, columns);
 }
 
 function updateTableBody(tbody, columns) {
     tbody.innerHTML = ''; 
-
     const filteredData = currentData.filter(item => {
         return columns.every(col => {
             if (!activeFilters[col]) return true; 
             return String(item[col]).toLowerCase().includes(activeFilters[col]);
         });
     });
-
     if (filteredData.length === 0) {
         const noDataRow = tbody.insertRow();
         const cell = noDataRow.insertCell();
@@ -118,7 +99,6 @@ function updateTableBody(tbody, columns) {
         cell.style.padding = '15px';
         return;
     }
-
     filteredData.forEach(item => {
         const row = tbody.insertRow();
         columns.forEach(col => {
@@ -126,4 +106,15 @@ function updateTableBody(tbody, columns) {
             cell.innerText = item[col];
         });
     });
+}
+
+function goToMission1() {
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+        p.classList.add('hidden');
+    });
+    document.getElementById('mission-page').classList.remove('hidden');
+    document.getElementById('mission-page').classList.add('active');
+    const dbBg = document.getElementById('db-background');
+    if(dbBg) dbBg.classList.add('hidden');
 }

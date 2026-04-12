@@ -20,7 +20,6 @@ body {
 .page { display: none; min-height: 100vh; flex-direction: column; }
 .page.active { display: flex; }
 
-/* Landing & Basic Layout */
 #landing-page { justify-content: center; align-items: center; background: linear-gradient(135deg, #1e293b, #0f172a); color: white; }
 .login-box { background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 12px; text-align: center; backdrop-filter: blur(10px); }
 .login-box input { width: 80%; padding: 12px; margin: 20px 0; border-radius: 6px; border: none; font-size: 16px; }
@@ -29,7 +28,7 @@ button { cursor: pointer; border: none; border-radius: 6px; padding: 10px 15px; 
 .primary-btn, .submit-btn { background-color: var(--primary-color); color: white; font-weight: bold; }
 .primary-btn:hover, .submit-btn:hover { background-color: #1d4ed8; }
 
-.skip-btn { position: absolute; top: 20px; left: 20px; background-color: #cbd5e1; color: #334155; font-size: 0.9em; padding: 8px 12px; z-index: 100; opacity: 0.7; }
+.skip-btn { background-color: #cbd5e1; color: #334155; font-size: 0.9em; padding: 8px 12px; z-index: 100; opacity: 0.7; }
 .skip-btn:hover { background-color: #94a3b8; color: white; opacity: 1; }
 
 header { background: #ffffff; padding: 15px 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); z-index: 20; position: relative;}
@@ -42,7 +41,6 @@ header { background: #ffffff; padding: 15px 30px; box-shadow: 0 2px 4px rgba(0,0
 .mission-submission input { width: 90%; padding: 8px; margin-bottom: 10px; border-radius: 4px; }
 .data-view { flex: 1; padding: 30px; }
 
-/* Tables */
 .table-wrapper { max-height: 400px; overflow-y: auto; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); background: white; margin-bottom: 20px; }
 table { width: 100%; border-collapse: collapse; }
 thead { position: sticky; top: 0; z-index: 10; background-color: #f1f5f9; box-shadow: 0 2px 2px rgba(0,0,0,0.1);} 
@@ -51,7 +49,6 @@ th { font-weight: bold; }
 tr:hover { background-color: #f8fafc; }
 .placeholder-text { color: #94a3b8; text-align: center; margin-top: 50px; font-size: 1.2em; }
 
-/* Terminal */
 .terminal-container { background: #1e293b; border-radius: 8px; padding: 20px; color: #e2e8f0; border: 1px solid #334155; direction: ltr; text-align: left; margin-bottom: 30px;}
 .terminal-header { font-size: 1.2em; font-weight: bold; margin-bottom: 15px; color: #94a3b8; border-bottom: 1px solid #334155; padding-bottom: 10px; }
 .query-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
@@ -69,14 +66,9 @@ tr:hover { background-color: #f8fafc; }
 .clear-btn { background: #64748b; }
 .terminal-output { margin-top: 15px; font-family: monospace; padding: 10px; border-left: 3px solid #3b82f6; background: rgba(15, 23, 42, 0.5); min-height: 20px; }
 
-/* ========================================= */
-/* Mission 3 - DB Design Styles & Animations */
-/* ========================================= */
 .m3-header-card { background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; color: #1e293b; border-right: 5px solid var(--primary-color);}
 
-/* הרקע החדש - נקי, אנימציות זורמות ופונטים גדולים */
 #db-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0b1120; z-index: -1; overflow: hidden; pointer-events: none; }
-
 .binary-stream { position: absolute; color: #10b981; font-family: 'Courier New', monospace; font-size: 2.5rem; opacity: 0; white-space: nowrap; animation: dropBinary linear infinite; writing-mode: vertical-rl; text-orientation: upright; text-shadow: 0 0 15px #10b981;}
 .stream1 { left: 10%; animation-duration: 14s; font-size: 2rem; animation-delay: 0s;}
 .stream2 { left: 30%; animation-duration: 18s; font-size: 4rem; opacity: 0.2; animation-delay: 2s;}
@@ -85,7 +77,6 @@ tr:hover { background-color: #f8fafc; }
 .stream5 { left: 90%; animation-duration: 15s; font-size: 1.8rem; animation-delay: 5s;}
 @keyframes dropBinary { 0% { top: -20vh; opacity: 0; } 15% { opacity: 0.4; } 85% { opacity: 0.4; } 100% { top: 120vh; opacity: 0; } }
 
-/* אנימציית הגרפים המצטיירים ברקע */
 .bg-graph { position: absolute; top: 20%; left: 0; width: 100%; height: 60%; opacity: 0.15; }
 .graph-line { fill: none; stroke: #3b82f6; stroke-width: 3; stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: drawGraph 10s ease-in-out infinite; }
 .graph-line.delay { stroke: #10b981; stroke-width: 4; animation-delay: 5s; }
@@ -123,3 +114,17 @@ tr:hover { background-color: #f8fafc; }
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; display: flex; justify-content: center; align-items: center; }
 .modal-content { background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);}
 .score-circle { width: 120px; height: 120px; border-radius: 50%; background: #2563eb; color: white; font-size: 3em; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; font-weight: bold; border: 8px solid #bfdbfe; transition: background-color 0.5s;}
+
+/* Mission 4 */
+.m4-data-row { padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-size: 1.1em; }
+.m4-data-row:last-child { border-bottom: none; }
+.graph-card { background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 2px solid transparent; text-align: center; }
+.graph-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.15); border-color: #3b82f6; }
+.inv-svg { width: 100%; height: 120px; background: #f8fafc; border-radius: 4px; margin-bottom: 10px; }
+.graph-title { font-weight: bold; color: #1e293b; font-size: 1.1em; margin-bottom: 5px; }
+.graph-sub { font-size: 0.85em; color: #64748b; }
+
+/* Mission 5 */
+.decision-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-right: 4px solid var(--primary-color); }
+.m5-question { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 0.9em; }
+.m5-question select { padding: 5px; border-radius: 4px; border: 1px solid #cbd5e1; width: 120px; }

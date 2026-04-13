@@ -1,22 +1,27 @@
 // mission5.js - Free Text SQL & Inventory Analytics
 
-let dbDraws = [];
-let dbArrivals = [];
-
 function initMission5() {
+    // מנקים טבלאות ישנות כדי למנוע כפילויות במעברי מסכים
+    alasql('DROP TABLE IF EXISTS draws');
+    alasql('DROP TABLE IF EXISTS arrivals');
+
+    // טעינה ומוכנות של טבלת המשיכות
     fetch('data/material_draws.json')
         .then(res => res.json())
         .then(data => {
-            dbDraws = data;
-            alasql.tables.draws = { data: dbDraws };
-        });
+            alasql('CREATE TABLE draws');
+            alasql('SELECT * INTO draws FROM ?', [data]);
+        })
+        .catch(err => console.error("Error loading draws:", err));
 
+    // טעינה ומוכנות של טבלת ההגעות
     fetch('data/material_arrivals.json')
         .then(res => res.json())
         .then(data => {
-            dbArrivals = data;
-            alasql.tables.arrivals = { data: dbArrivals };
-        });
+            alasql('CREATE TABLE arrivals');
+            alasql('SELECT * INTO arrivals FROM ?', [data]);
+        })
+        .catch(err => console.error("Error loading arrivals:", err));
 }
 
 function runFreeSQL() {
@@ -24,11 +29,12 @@ function runFreeSQL() {
     const container = document.getElementById('m5-table-container');
     
     if (!query) {
-        container.innerHTML = '<p style="color:red; text-align:center;">אנא הזן שאילתה.</p>';
+        container.innerHTML = '<p style="color:red; text-align:center;">Please enter a SQL query.</p>';
         return;
     }
 
     try {
+        // הרצת השאילתה על המנוע - עכשיו כשהטבלאות מלאות בנתונים
         const result = alasql(query);
         renderM5Table(result);
     } catch (err) {
@@ -38,14 +44,13 @@ function runFreeSQL() {
     }
 }
 
-// פונקציה להצגה מהירה של כל הנתונים בטבלה (כפתורי הצד)
 function showFullTable(tableName) {
     const container = document.getElementById('m5-table-container');
     try {
         const result = alasql(`SELECT * FROM ${tableName}`);
         renderM5Table(result);
     } catch (err) {
-        container.innerHTML = `<div style="color:#ef4444; padding:15px;">שגיאה בטעינת הטבלה: ${err.message}</div>`;
+        container.innerHTML = `<div style="color:#ef4444; padding:15px;">Error loading table: ${err.message}</div>`;
     }
 }
 
@@ -54,7 +59,7 @@ function renderM5Table(data) {
     container.innerHTML = '';
 
     if (!data || data.length === 0) {
-        container.innerHTML = '<p style="text-align:center;">No results found.</p>';
+        container.innerHTML = '<p style="text-align:center;">No results returned for this query.</p>';
         return;
     }
 
@@ -122,7 +127,9 @@ function goToMission5() {
     });
     document.getElementById('mission5-page').classList.remove('hidden');
     document.getElementById('mission5-page').classList.add('active');
+    
     const dbBg = document.getElementById('db-background');
     if(dbBg) dbBg.classList.add('hidden');
+    
     initMission5();
 }

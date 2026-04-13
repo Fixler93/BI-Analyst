@@ -19,15 +19,22 @@ function initMission3() {
         el.className = 'db-col';
         el.draggable = true;
         el.id = 'col_' + col;
+        
+        // הוספנו כפתור ❌ שמופיע רק כשזה בתוך טבלה
         el.innerHTML = `
-            <span>${col} <span class="state-badge pk">PK</span><span class="state-badge calc">Calc</span><span class="fk-label"></span></span>
-            <button class="fk-btn" onclick="setFK(event, this)">🔗</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span>${col} <span class="state-badge pk">PK</span><span class="state-badge calc">Calc</span><span class="fk-label"></span></span>
+                <div>
+                    <button class="fk-btn" onclick="setFK(event, this)">🔗</button>
+                    <button class="return-btn" onclick="returnToPool(event, this)" title="החזר למאגר">❌</button>
+                </div>
+            </div>
         `;
         
         el.addEventListener('dragstart', dragStart);
         
         el.addEventListener('click', (e) => {
-            if(e.target.classList.contains('fk-btn')) return;
+            if(e.target.tagName.toLowerCase() === 'button') return; // לא ללחוץ על הכפתורים
             if(el.parentElement.id === 'column-pool') return; 
 
             if (el.classList.contains('state-pk')) {
@@ -44,6 +51,15 @@ function initMission3() {
     });
 
     addNewTable();
+}
+
+function returnToPool(event, btn) {
+    event.stopPropagation();
+    const col = btn.closest('.db-col');
+    col.classList.remove('state-pk', 'state-calc');
+    col.querySelector('.fk-label').innerText = '';
+    col.removeAttribute('data-fk');
+    document.getElementById('column-pool').appendChild(col);
 }
 
 function dragStart(e) { e.dataTransfer.setData('text/plain', e.target.id); }
@@ -79,9 +95,12 @@ function addNewTable() {
     tableCard.className = 'db-table-card';
     tableCard.id = 'table_' + tableCounter;
     
+    // הוספנו כפתור פח אשפה ליד שם הטבלה
     tableCard.innerHTML = `
-        <div class="db-table-header">
-            <input type="text" placeholder="Table Name (e.g. Suppliers)" class="tbl-name-input">
+        <div class="db-table-header" style="position: relative;">
+            <button onclick="deleteTable('table_${tableCounter}')" style="position: absolute; left: 5px; top: 5px; background: transparent; border: none; cursor: pointer; color: #ef4444; font-size: 1.2em;" title="מחק טבלה">🗑️</button>
+            <input type="text" placeholder="Table Name..." class="tbl-name-input" style="width: 80%; float: right;">
+            <div style="clear: both; margin-bottom: 5px;"></div>
             <select class="tbl-norm-select">
                 <option value="0">Select Normalization...</option>
                 <option value="1NF">1NF</option>
@@ -94,6 +113,22 @@ function addNewTable() {
         </div>
     `;
     ws.appendChild(tableCard);
+}
+
+function deleteTable(tableId) {
+    const table = document.getElementById(tableId);
+    if(!table) return;
+    
+    const cols = table.querySelectorAll('.db-col');
+    const pool = document.getElementById('column-pool');
+    cols.forEach(col => {
+        col.classList.remove('state-pk', 'state-calc');
+        col.querySelector('.fk-label').innerText = '';
+        col.removeAttribute('data-fk');
+        pool.appendChild(col);
+    });
+    
+    table.remove();
 }
 
 function setFK(event, btnElement) {
@@ -115,7 +150,7 @@ function setFK(event, btnElement) {
 }
 
 // ==========================================
-// מנוע הציונים לפי אפיון הטבלאות 
+// מנוע הציונים
 // ==========================================
 function submitDatabaseDesign() {
     let score = 0;
@@ -123,7 +158,8 @@ function submitDatabaseDesign() {
     
     const tables = document.querySelectorAll('.db-table-card');
     if (tables.length === 0) {
-        alert("לא יצרת אף טבלה."); return;
+        alert("לא יצרת אף טבלה. אתה יכול ליצור טבלאות חדשות עם הכפתור 'הוסף טבלה'."); 
+        return;
     }
 
     let userTablesData = Array.from(tables).map(table => {
@@ -138,21 +174,18 @@ function submitDatabaseDesign() {
         };
     });
 
-    // 1. טבלת ספקים (25 נקודות)
     if (userTablesData.some(t => t.columns.some(c => c.name === "Supplier_ID"))) {
         const t = userTablesData.find(t => t.columns.some(c => c.name === "Supplier_ID"));
         if (t.columns.find(c => c.name === "Supplier_ID" && c.isPK)) { score += 25; } 
         else { feedback.push("Supplier_ID חייב להיות מסומן כמפתח ראשי (PK)."); }
     } else { feedback.push("חסרה טבלת ספקים עם Supplier_ID."); }
 
-    // 2. טבלת מוצרים (25 נקודות)
     if (userTablesData.some(t => t.columns.some(c => c.name === "Product_ID"))) {
         const t = userTablesData.find(t => t.columns.some(c => c.name === "Product_ID"));
         if (t.columns.find(c => c.name === "Product_ID" && c.isPK)) { score += 25; } 
         else { feedback.push("Product_ID חייב להיות מסומן כמפתח ראשי (PK)."); }
     } else { feedback.push("חסרה טבלת מוצרים עם Product_ID."); }
 
-    // 3. טבלת הזמנות (25 נקודות)
     if (userTablesData.some(t => t.columns.some(c => c.name === "Order_ID"))) {
         const t = userTablesData.find(t => t.columns.some(c => c.name === "Order_ID"));
         let orderScore = 0;
@@ -163,7 +196,6 @@ function submitDatabaseDesign() {
         if (t.columns.find(c => c.name === "Total_Cost" && c.isCalc)) { orderScore += 10; } 
         else { feedback.push("Total_Cost חייב להיות שדה מחושב (Calc) בהזמנות."); }
         
-        // וידוא שעמודת הסטטוס נמצאת כאן ויש לה לינק FK
         const hasStatusFK = t.columns.some(c => (c.name === "Status_Code" || c.name === "Status_Description") && c.hasFK);
         if (hasStatusFK) { orderScore += 5; } 
         else { feedback.push("חובה למקם את עמודת הסטטוס (קוד או תיאור) בהזמנות ולהוסיף לה קישור 🔗 (FK)."); }
@@ -171,25 +203,24 @@ function submitDatabaseDesign() {
         score += orderScore;
     } else { feedback.push("חסרה טבלת הזמנות מרכזית עם Order_ID."); }
 
-    // 4. טבלת סטטוסים (25 נקודות) - צריכה להכיל 2 מפתחות וללא ה-Order_ID
     const statusTable = userTablesData.find(t => 
         !t.columns.some(c => c.name === "Order_ID") && 
-        (t.columns.some(c => c.name === "Status_Code") || t.columns.some(c => c.name === "Status_Description"))
+        (t.columns.some(c => c.name === "Weather_Condition"))
     );
 
     if (statusTable) {
         let statScore = 0;
         const hasCodePK = statusTable.columns.find(c => c.name === "Status_Code" && c.isPK);
-        const hasDescPK = statusTable.columns.find(c => c.name === "Status_Description" && c.isPK);
+        const hasWeatherPK = statusTable.columns.find(c => c.name === "Weather_Condition" && c.isPK);
         
-        if (hasCodePK && hasDescPK) { statScore += 15; } 
-        else { feedback.push("טבלת הסטטוסים החיצונית צריכה להכיל גם קוד וגם תיאור, ושניהם מפתחות ראשיים (PK)."); }
+        if (hasCodePK && hasWeatherPK) { statScore += 15; } 
+        else { feedback.push("טבלת הסטטוסים ומזג האוויר צריכה להכיל גם את Status_Code וגם את Weather_Condition, כששניהם מפתחות ראשיים (PK)."); }
         
         if (statusTable.normLevel === "1NF") { statScore += 10; } 
-        else { feedback.push("טבלת הסטטוסים צריכה להיות ברמת נרמול 1NF."); }
+        else { feedback.push("טבלת הסטטוסים ומזג האוויר צריכה להיות ברמת נרמול 1NF."); }
         
         score += statScore;
-    } else { feedback.push("חסרה טבלת ייחוס לסטטוסים בנפרד מההזמנות."); }
+    } else { feedback.push("חסרה טבלת ייחוס (1NF) המשלבת את הסטטוס עם תנאי מזג האוויר בנפרד מההזמנות."); }
 
     if(score > 100) score = 100;
     if(score < 0) score = 0;
@@ -216,7 +247,7 @@ function showScoreModal(score, feedbackMessages) {
 
             feedbackText.innerHTML = feedbackMessages.length > 0 ? 
                 "<ul style='text-align:right; color:#ef4444; font-size:0.9em; padding-right:15px; margin-top:20px;'>" + feedbackMessages.map(m => `<li>${m}</li>`).join('') + "</ul>" : 
-                "<div style='margin-top:20px;'><span style='color:#10b981; font-weight:bold; font-size:1.2em;'>מבנה מושלם! עבודה של DBA אמיתי. הוכחת את עצמך.</span><br><br><button class='submit-btn' style='background:#10b981; padding: 10px 20px;' onclick='goToMission4(); document.getElementById(\"m3-score-modal\").classList.add(\"hidden\");'>המשך למשימה 4</button></div>";
+                "<div style='margin-top:20px;'><span style='color:#10b981; font-weight:bold; font-size:1.2em;'>מבנה מושלם! עבודה של DBA אמיתי. הוכחת את עצמך.</span></div>";
         } else {
             currentScore += 2;
             if(currentScore > score) currentScore = score;

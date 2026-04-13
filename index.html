@@ -32,8 +32,10 @@
     </div>
 
     <div id="mission-page" class="page hidden">
-        <header>
-            <button class="skip-btn" onclick="goToMission2()">⏭️ דלג למשימה 2</button>
+<header>
+            <div style="position: absolute; top: 20px; left: 20px; z-index: 100; display: flex; gap: 10px;">
+                <button class="skip-btn" style="position: static;" onclick="goToMission2()">⏭️ דלג למשימה 2</button>
+            </div>
             <h1>🗂️ 🔍 משימה 1: משבר במלאי</h1>
             <p id="playerGreeting"></p>
         </header>
@@ -133,10 +135,7 @@
                     Mission 3: Database Architecture
                 </h1>
                 <p style="margin-bottom:0; font-size: 1.05em; line-height: 1.5;">
-                   מסד הנתונים הקודם קרס לחלוטין! עליך לעצב מחדש את הארכיטקטורה מתוך מאגר העמודות שחילצנו בחירום.
-                   <br><br>
-                   <strong>שים לב:</strong> יש כאן הצעה לעמודות נצרכות, עליך להחליט מה לשים ומה לא. מחייבים אותך להוסיף עמודת "תיאור סטטוס" להזמנה – תחשוב האם נדרשת טבלה נוספת כדי שהמודל יעבוד בצורה תקינה.
-                   <br><br>
+                   מסד הנתונים הקודם קרס לחלוטין! עליך לעצב מחדש את הארכיטקטורה מתוך מאגר העמודות שחילצנו בחירום.<br><br>
                    <strong>הוראות עבודה:</strong><br>
                    1. גרור עמודות לטבלאות (הוסף טבלאות בעזרת הכפתור).<br>
                    2. קליק על עמודה בטבלה מגדיר אותה כ-<span style="color:#eab308;font-weight:bold;">PK (מפתח ראשי)</span>, קליק שני מגדיר כ-<span style="color:#a855f7;font-weight:bold;">Calc (מחושב)</span>. שלישי מוחק את הסימון.<br>
@@ -145,23 +144,19 @@
                 </p>
             </div>
         </div>
-        
         <main class="dashboard-container" style="background: transparent;">
             <aside class="sidebar m3-sidebar">
                 <h3 style="margin-top:0;">מאגר עמודות (גרור מכאן)</h3>
-                <div id="column-pool" class="column-pool" ondrop="dropToPool(event)" ondragover="allowDrop(event)">
-                </div>
+                <div id="column-pool" class="column-pool" ondrop="dropToPool(event)" ondragover="allowDrop(event)"></div>
             </aside>
             <section class="data-view db-canvas" style="flex: 1; min-height: 80vh;">
                 <button onclick="addNewTable()" class="primary-btn" style="margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">➕ הוסף טבלה חדשה</button>
-                <div id="tables-workspace" class="tables-workspace">
-                </div>
+                <div id="tables-workspace" class="tables-workspace"></div>
                 <div style="margin-top: 40px; margin-bottom: 40px; text-align: left;" dir="ltr">
                     <button onclick="submitDatabaseDesign()" class="submit-btn" style="font-size: 1.2em; padding: 15px 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">Submit Architecture</button>
                 </div>
             </section>
         </main>
-        
         <div id="m3-score-modal" class="hidden modal-overlay">
             <div class="modal-content">
                 <h2>תוצאות ארכיטקטורה</h2>
@@ -199,6 +194,22 @@
                 </div>
             </aside>
             <section class="m4-graphs-grid" style="flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; align-content: start;">
+                <div class="graph-card" id="graph_epq" onclick="selectGraph('graph_epq')">
+                    <svg viewBox="0 0 200 100" class="inv-svg">
+                        <polyline points="10,90 35,20 60,90 85,20 110,90 135,20 160,90 185,20" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                        <line x1="0" y1="90" x2="200" y2="90" stroke="#94a3b8" stroke-width="1"/>
+                    </svg>
+                    <div class="graph-title">EPQ (אספקה הדרגתית)</div>
+                    <div class="graph-sub">צריכה תוך כדי תהליך ייצור פנימי</div>
+                </div>
+                <div class="graph-card" id="graph_jit" onclick="selectGraph('graph_jit')">
+                    <svg viewBox="0 0 200 100" class="inv-svg">
+                        <polyline points="10,90 10,75 20,90 20,75 30,90 30,75 40,90 40,75 50,90 50,75 60,90 60,75 70,90 70,75 80,90 80,75 90,90 90,75 100,90 100,75 110,90 110,75 120,90 120,75 130,90 130,75 140,90 140,75 150,90 150,75 160,90 160,75 170,90 170,75 180,90 180,75 190,90 190,75" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                        <line x1="0" y1="90" x2="200" y2="90" stroke="#94a3b8" stroke-width="1"/>
+                    </svg>
+                    <div class="graph-title">Just-In-Time (JIT)</div>
+                    <div class="graph-sub">אספקות קטנות ותכופות, מלאי אפסי</div>
+                </div>
                 <div class="graph-card" id="graph_sawtooth" onclick="selectGraph('graph_sawtooth')">
                     <svg viewBox="0 0 200 100" class="inv-svg">
                         <polyline points="10,90 10,20 40,90 40,20 70,90 70,20 100,90 100,20 130,90 130,20 160,90 160,20 190,90" fill="none" stroke="#3b82f6" stroke-width="2"/>
@@ -216,14 +227,6 @@
                     <div class="graph-title">Reorder Point + Safety Stock</div>
                     <div class="graph-sub">מלאי ביטחון להגנה מתנודות</div>
                 </div>
-                <div class="graph-card" id="graph_epq" onclick="selectGraph('graph_epq')">
-                    <svg viewBox="0 0 200 100" class="inv-svg">
-                        <polyline points="10,90 35,20 60,90 85,20 110,90 135,20 160,90 185,20" fill="none" stroke="#3b82f6" stroke-width="2"/>
-                        <line x1="0" y1="90" x2="200" y2="90" stroke="#94a3b8" stroke-width="1"/>
-                    </svg>
-                    <div class="graph-title">EPQ (אספקה הדרגתית)</div>
-                    <div class="graph-sub">צריכה תוך כדי תהליך ייצור פנימי</div>
-                </div>
                 <div class="graph-card" id="graph_lumpy" onclick="selectGraph('graph_lumpy')">
                     <svg viewBox="0 0 200 100" class="inv-svg">
                         <polyline points="10,90 10,20 60,20 60,60 110,60 110,90 110,20 160,20 160,80 190,80" fill="none" stroke="#3b82f6" stroke-width="2"/>
@@ -232,14 +235,6 @@
                     <div class="graph-title">Lumpy Demand (ביקוש גושי)</div>
                     <div class="graph-sub">משיכות גדולות ופתאומיות מהמלאי</div>
                 </div>
-                <div class="graph-card" id="graph_jit" onclick="selectGraph('graph_jit')">
-                    <svg viewBox="0 0 200 100" class="inv-svg">
-                        <polyline points="10,90 10,75 20,90 20,75 30,90 30,75 40,90 40,75 50,90 50,75 60,90 60,75 70,90 70,75 80,90 80,75 90,90 90,75 100,90 100,75 110,90 110,75 120,90 120,75 130,90 130,75 140,90 140,75 150,90 150,75 160,90 160,75 170,90 170,75 180,90 180,75 190,90 190,75" fill="none" stroke="#3b82f6" stroke-width="2"/>
-                        <line x1="0" y1="90" x2="200" y2="90" stroke="#94a3b8" stroke-width="1"/>
-                    </svg>
-                    <div class="graph-title">Just-In-Time (JIT)</div>
-                    <div class="graph-sub">אספקות קטנות ותכופות, מלאי אפסי</div>
-                </div>
             </section>
         </main>
     </div>
@@ -247,13 +242,12 @@
     <div id="mission5-page" class="page hidden" style="padding-top: 20px;">
         <header style="margin: 0 20px;">
             <div style="position: absolute; top: 20px; left: 20px; z-index: 100; display: flex; gap: 10px;">
-                <button class="skip-btn" style="position: static;" onclick="alert('הגעת לסוף המערכת!')">⏭️ סיום המשחק</button>
+                <button class="skip-btn" style="position: static;" onclick="goToMission6()">⏭️ דלג למשימה 6</button>
                 <button class="skip-btn" style="position: static;" onclick="goToMission4()">⏮️ חזור למשימה 4</button>
             </div>
             <h1>📊 משימה 5: חקירת דפוסי מלאי ע"י SQL</h1>
             <p>שלושה חומרים שונים מתנהגים בצורות שונות. חקור את הטבלאות "draws" (משיכות) ו-"arrivals" (הגעות) בעזרת הטרמינל. התאם לכל גרף את החומר הנכון (01, 02 או 03), והחלט האם לבצע הזמנה <strong>היום (Day 10)</strong> לפי זמן האספקה.</p>
         </header>
-        
         <main class="dashboard-container" style="flex-direction: row; padding: 20px; gap: 20px;">
             <section class="m5-sql-section" style="flex: 2; display: flex; flex-direction: column; gap: 20px;">
                 <div class="terminal-container" style="margin-bottom: 0;">
@@ -263,34 +257,53 @@
                     </div>
                     <div style="display: flex; gap: 15px;">
                         <div class="sql-dictionary" style="width: 150px; background: #0f172a; padding: 10px; border-radius: 4px; font-size: 0.85em; font-family: monospace;">
-                            <div style="color:#94a3b8; border-bottom:1px solid #334155; margin-bottom:5px;">📋 מילון פקודות</div>
-                            <span style="color:#3b82f6">SELECT</span> *<br>
-                            <span style="color:#3b82f6">FROM</span> draws<br>
-                            <span style="color:#3b82f6">FROM</span> arrivals<br>
-                            <span style="color:#3b82f6">WHERE</span> Material_ID = 'MAT-01'<br>
-                            <span style="color:#3b82f6">AND</span> Action = 'משיכה לרצפה'<br>
+                            <div style="color:#94a3b8; border-bottom:1px solid #334155; margin-bottom:5px;">📋 Dictionary</div>
+                            <span style="color:#3b82f6">SELECT</span> *, Worker_ID<br>
+                            <span style="color:#3b82f6">FROM</span> draws, arrivals<br>
+                            <span style="color:#3b82f6">WHERE</span> Qty > 50<br>
+                            <span style="color:#3b82f6">AND</span> Remarks = 'Urgent'<br>
                             <span style="color:#3b82f6">ORDER BY</span> Date <span style="color:#10b981">DESC</span><br>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; gap: 10px;">
-                            <textarea id="m5-sql-input" placeholder="Type your SQL query here... e.g. SELECT * FROM draws WHERE Material_ID = 'MAT-01'" style="width: 100%; height: 100px; background: #0f172a; color: #10b981; font-family: monospace; font-size: 1.1em; border: 1px solid #334155; border-radius: 4px; padding: 10px; resize: none;"></textarea>
+                            <textarea id="m5-sql-input" placeholder="Type your SQL query here..." style="width: 100%; height: 100px; background: #0f172a; color: #10b981; font-family: monospace; font-size: 1.1em; border: 1px solid #334155; border-radius: 4px; padding: 10px; resize: none;"></textarea>
                             <button onclick="runFreeSQL()" class="run-btn" style="width: 150px;">▶ Run Query</button>
                         </div>
                     </div>
                 </div>
-
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <button onclick="showFullTable('draws')" class="primary-btn" style="flex: 1; background: #3b82f6;">📋 הצג טבלת משיכות (draws)</button>
                     <button onclick="showFullTable('arrivals')" class="primary-btn" style="flex: 1; background: #8b5cf6;">📦 הצג טבלת הגעות (arrivals)</button>
                 </div>
-
                 <div id="m5-table-container" class="table-wrapper" style="flex: 1; min-height: 200px;">
                     <p class="placeholder-text">הרץ שאילתה בטרמינל או לחץ על הכפתורים למעלה כדי להציג נתונים.</p>
                 </div>
             </section>
-
             <aside class="m5-decision-section" style="flex: 1; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; max-height: 80vh; padding-right: 10px;">
                 <div class="decision-card">
-                    <div class="graph-title">גרף א' - מודל שיני מסור</div>
+                    <div class="graph-title">גרף א' - תנודתי (מלאי ביטחון)</div>
+                    <svg viewBox="0 0 200 80" class="inv-svg">
+                        <line x1="0" y1="50" x2="200" y2="50" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+                        <polyline points="10,60 10,20 30,25 50,45 80,45 100,55" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                        <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="1"/>
+                        <text x="100" y="80" font-size="8" fill="#ef4444" font-weight="bold">Day 10 (Today)</text>
+                    </svg>
+                    <div class="graph-sub" style="color:#ef4444; margin-bottom: 10px;">* זמן אספקה (Lead Time): 5 ימים</div>
+                    <div class="m5-question"><label>איזה חומר זה?</label><select id="m5-q2-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select></div>
+                    <div class="m5-question"><label>להזמין <strong>היום</strong>?</label><select id="m5-q2-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select></div>
+                </div>
+                <div class="decision-card">
+                    <div class="graph-title">גרף ב' - ביקוש גושי</div>
+                    <svg viewBox="0 0 200 80" class="inv-svg">
+                        <polyline points="10,70 10,10 60,10 60,50 90,50 100,60" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                        <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="1"/>
+                        <text x="100" y="80" font-size="8" fill="#ef4444" font-weight="bold">Day 10 (Today)</text>
+                    </svg>
+                    <div class="graph-sub" style="color:#ef4444; margin-bottom: 10px;">* זמן אספקה (Lead Time): יום אחד</div>
+                    <div class="m5-question"><label>איזה חומר זה?</label><select id="m5-q3-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select></div>
+                    <div class="m5-question"><label>להזמין <strong>היום</strong>?</label><select id="m5-q3-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select></div>
+                </div>
+                <div class="decision-card">
+                    <div class="graph-title">גרף ג' - מודל שיני מסור</div>
                     <svg viewBox="0 0 200 80" class="inv-svg">
                         <polyline points="10,70 10,10 40,70 40,10 70,70 70,10 100,70" fill="none" stroke="#3b82f6" stroke-width="2"/>
                         <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="1"/>
@@ -300,54 +313,107 @@
                         <text x="100" y="80" font-size="8" fill="#ef4444" font-weight="bold">Day 10 (Today)</text>
                     </svg>
                     <div class="graph-sub" style="color:#ef4444; margin-bottom: 10px;">* זמן אספקה (Lead Time): יומיים (2 Days)</div>
-                    <div class="m5-question">
-                        <label>איזה חומר זה?</label>
-                        <select id="m5-q1-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select>
+                    <div class="m5-question"><label>איזה חומר זה?</label><select id="m5-q1-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select></div>
+                    <div class="m5-question"><label>להזמין <strong>היום</strong>?</label><select id="m5-q1-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select></div>
+                </div>
+                <button onclick="submitMission5()" class="submit-btn" style="padding: 15px; font-size: 1.1em;">הגש ניתוח מלאי</button>
+            </aside>
+        </main>
+    </div>
+
+    <div id="mission6-page" class="page hidden" style="background:#e2e8f0; min-height: 100vh;">
+        <header style="background: white;">
+            <div style="position: absolute; top: 20px; left: 20px; z-index: 100; display: flex; gap: 10px;">
+                <button class="skip-btn" style="position: static;" onclick="alert('הגעת לסוף!')">⏭️ סיום</button>
+                <button class="skip-btn" style="position: static;" onclick="goToMission5()">⏮️ חזור למשימה 5</button>
+            </div>
+            <h1>📈 משימה 6: בניית דשבורד ובקרת ספקים (Vendor Scorecard)</h1>
+            <p>ההנהלה שוקלת לפטר ספקים שלא עומדים ב-KPI של מתחת ל-15% איחורים חודשיים. בנה דשבורד שמציג משלוחים לפי ספק ואיחורים לפי חודש, כדי שתוכל לאתר אותם. <br><strong>שלב 1:</strong> גרור 2 סוגי ויזואליות לחלל העבודה, ואז גרור אליהם את השדות המתאימים.</p>
+        </header>
+
+        <main id="m6-builder-section" style="display:flex; padding:20px; gap:20px;">
+            <aside style="width:250px; background:white; padding:15px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+                <h3 style="margin-top:0;">1. Visualizations</h3>
+                <div class="draggable-item" draggable="true" id="vis_pie" data-type="visual" data-value="pie">🥧 Pie Chart (עוגה)</div>
+                <div class="draggable-item" draggable="true" id="vis_bar" data-type="visual" data-value="bar">📊 Bar Chart (עמודות)</div>
+                <div class="draggable-item" draggable="true" id="vis_line" data-type="visual" data-value="line">📈 Line Chart (קו)</div>
+                <div class="draggable-item" draggable="true" id="vis_kpi" data-type="visual" data-value="kpi">💳 KPI Card (כרטיס)</div>
+                <div class="draggable-item" draggable="true" id="vis_table" data-type="visual" data-value="table">📋 Table (טבלה)</div>
+                
+                <h3 style="margin-top:20px; border-top:1px solid #ccc; padding-top:15px;">2. Fields (Data)</h3>
+                <div class="draggable-item" draggable="true" id="fld_id" data-type="field" data-value="Delivery_ID"># Delivery_ID (ספירה)</div>
+                <div class="draggable-item" draggable="true" id="fld_sup" data-type="field" data-value="Supplier">🏢 Supplier (קטגוריה)</div>
+                <div class="draggable-item" draggable="true" id="fld_month" data-type="field" data-value="Month">📅 Month (ציר זמן)</div>
+                <div class="draggable-item" draggable="true" id="fld_late" data-type="field" data-value="Is_Late">⏰ Is_Late (ערך איחורים)</div>
+            </aside>
+            
+            <section style="flex:1; display:flex; flex-direction:column; gap:20px;">
+                <div style="display:flex; gap:20px; height:350px;">
+                    <div id="dash-left" class="drop-zone dash-panel" data-accept="visual" data-panel="left">
+                        <p class="placeholder-text">Drop Visual Here (Left)</p>
                     </div>
-                    <div class="m5-question">
-                        <label>להזמין <strong>היום</strong>?</label>
-                        <select id="m5-q1-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select>
+                    <div id="dash-right" class="drop-zone dash-panel" data-accept="visual" data-panel="right">
+                        <p class="placeholder-text">Drop Visual Here (Right)</p>
                     </div>
                 </div>
+                <button onclick="buildDashboard()" class="submit-btn" style="padding:15px; font-size:1.2em;">🔧 רנדר דשבורד</button>
+            </section>
+        </main>
 
-                <div class="decision-card">
-                    <div class="graph-title">גרף ב' - תנודתי (מלאי ביטחון)</div>
-                    <svg viewBox="0 0 200 80" class="inv-svg">
-                        <line x1="0" y1="50" x2="200" y2="50" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
-                        <polyline points="10,60 10,20 30,25 50,45 80,45 100,55" fill="none" stroke="#3b82f6" stroke-width="2"/>
-                        <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="1"/>
-                        <text x="100" y="80" font-size="8" fill="#ef4444" font-weight="bold">Day 10 (Today)</text>
-                    </svg>
-                    <div class="graph-sub" style="color:#ef4444; margin-bottom: 10px;">* זמן אספקה (Lead Time): 5 ימים</div>
-                    <div class="m5-question">
-                        <label>איזה חומר זה?</label>
-                        <select id="m5-q2-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select>
+        <main id="m6-live-section" class="hidden" style="display:flex; padding:20px; gap:20px;">
+            <section style="flex:2; display:flex; flex-direction:column; gap:20px;">
+                <div style="display:flex; gap:20px; height:350px;">
+                    <div class="live-panel" style="flex:1; background:white; padding:15px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                        <h3>Total Deliveries by Supplier</h3>
+                        <div id="live-pie"></div>
                     </div>
-                    <div class="m5-question">
-                        <label>להזמין <strong>היום</strong>?</label>
-                        <select id="m5-q2-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select>
-                    </div>
-                </div>
-
-                <div class="decision-card">
-                    <div class="graph-title">גרף ג' - ביקוש גושי</div>
-                    <svg viewBox="0 0 200 80" class="inv-svg">
-                        <polyline points="10,70 10,10 60,10 60,50 90,50 100,60" fill="none" stroke="#3b82f6" stroke-width="2"/>
-                        <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="1"/>
-                        <text x="100" y="80" font-size="8" fill="#ef4444" font-weight="bold">Day 10 (Today)</text>
-                    </svg>
-                    <div class="graph-sub" style="color:#ef4444; margin-bottom: 10px;">* זמן אספקה (Lead Time): יום אחד</div>
-                    <div class="m5-question">
-                        <label>איזה חומר זה?</label>
-                        <select id="m5-q3-mat"><option value="">בחר...</option><option value="MAT-01">MAT-01</option><option value="MAT-02">MAT-02</option><option value="MAT-03">MAT-03</option></select>
-                    </div>
-                    <div class="m5-question">
-                        <label>להזמין <strong>היום</strong>?</label>
-                        <select id="m5-q3-order"><option value="">החלטה...</option><option value="yes">כן, מיד</option><option value="no">לא</option></select>
+                    <div class="live-panel" style="flex:1; background:white; padding:15px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                        <h3>Late Deliveries by Month</h3>
+                        <div id="live-bar"></div>
                     </div>
                 </div>
                 
-                <button onclick="submitMission5()" class="submit-btn" style="padding: 15px; font-size: 1.1em;">הגש ניתוח מלאי</button>
+                <div style="background:white; padding:20px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                    <h3>📝 הערכת ספקים (KPI: איחורים < 15%)</h3>
+                    <p>לחיצה על ספק למעלה תסנן את הגרף. בדוק האם הספק עמד ביעד החודשי לאורך התקופה. <strong>רק ספק שקטן מ-15% בכל חודש מוגדר כעומד ביעד באותו חודש.</strong></p>
+                    
+                    <table class="assessment-table" style="width:100%; text-align:center;">
+                        <tr style="background:#f1f5f9;"><th>Supplier</th><th>Dec 2025</th><th>Jan 2026</th><th>Feb 2026</th><th>Mar 2026</th></tr>
+                        <tr>
+                            <td><strong>SUP-A</strong></td>
+                            <td><label><input type="radio" name="A-12" value="yes"> עמד</label> <label><input type="radio" name="A-12" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="A-01" value="yes"> עמד</label> <label><input type="radio" name="A-01" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="A-02" value="yes"> עמד</label> <label><input type="radio" name="A-02" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="A-03" value="yes"> עמד</label> <label><input type="radio" name="A-03" value="no"> נכשל</label></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SUP-B</strong></td>
+                            <td><label><input type="radio" name="B-12" value="yes"> עמד</label> <label><input type="radio" name="B-12" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="B-01" value="yes"> עמד</label> <label><input type="radio" name="B-01" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="B-02" value="yes"> עמד</label> <label><input type="radio" name="B-02" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="B-03" value="yes"> עמד</label> <label><input type="radio" name="B-03" value="no"> נכשל</label></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SUP-C</strong></td>
+                            <td><label><input type="radio" name="C-12" value="yes"> עמד</label> <label><input type="radio" name="C-12" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="C-01" value="yes"> עמד</label> <label><input type="radio" name="C-01" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="C-02" value="yes"> עמד</label> <label><input type="radio" name="C-02" value="no"> נכשל</label></td>
+                            <td><label><input type="radio" name="C-03" value="yes"> עמד</label> <label><input type="radio" name="C-03" value="no"> נכשל</label></td>
+                        </tr>
+                    </table>
+                    <div style="text-align:left; margin-top:20px;">
+                        <button onclick="submitAssessment()" class="submit-btn">שלח הערכה להנהלה</button>
+                    </div>
+                </div>
+            </section>
+            
+            <aside style="width:250px; background:#1e293b; color:white; padding:20px; border-radius:8px; display:flex; flex-direction:column; align-items:center;">
+                <h3>🧮 מחשבון אחוזים</h3>
+                <input type="number" id="calc-val1" placeholder="איחורים (Late)" style="width:80%; padding:10px; text-align:center; margin-bottom:10px; border-radius:4px;">
+                <div style="font-size:1.5em; margin-bottom:10px;">➗</div>
+                <input type="number" id="calc-val2" placeholder="סך הכל (Total)" style="width:80%; padding:10px; text-align:center; margin-bottom:10px; border-radius:4px;">
+                <button onclick="calculateKPI()" style="background:#10b981; color:white; width:80%; padding:10px; margin-bottom:20px; font-weight:bold;">חשב אחוזים</button>
+                <div id="calc-result" style="font-size:2.5em; color:#3b82f6; font-weight:bold;">0%</div>
             </aside>
         </main>
     </div>
@@ -358,5 +424,6 @@
     <script src="mission3.js"></script>
     <script src="mission4.js"></script>
     <script src="mission5.js"></script>
+    <script src="mission6.js"></script>
 </body>
 </html>
